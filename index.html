@@ -189,7 +189,7 @@
         .timeline::before {
             content: '';
             position: absolute;
-            left: 24px; /* 時間軸線位置 */
+            left: 32px; /* 時間軸線位置 */
             top: 15px;
             bottom: 15px;
             width: 4px;
@@ -206,7 +206,7 @@
         /* 🎯 修正圓點 - 改為實心圓 + 加粗 */
 .timeline-dot {
     position: absolute;
-    left: -46px; /* 🔧 重新調整位置讓圓點在線上 */
+    left: -38px; /* 🔧 重新調整位置讓圓點在線上 */
     top: 50%;
     transform: translateY(-50%);
     width: 24px; /* 🔧 加大圓點 */
@@ -220,7 +220,7 @@
         /* 🎯 修正交通工具圖標位置 */
 .timeline-icon {
     position: absolute;
-    left: -66px; /* 🔧 重新調整位置 */
+    left: -58px; /* 🔧 重新調整位置 */
     top: 50%;
     transform: translateY(-50%);
     background: #1f2937;
@@ -270,7 +270,7 @@
 .transport-card::before {
     content: '';
     position: absolute;
-    left: -48px; /* 🔧 調整到正確位置 */
+    left: -40px; /* 🔧 調整到正確位置 */
     top: -25px; /* 🔧 延伸更多確保連接 */
     bottom: -25px; /* 🔧 延伸更多確保連接 */
     width: 8px; /* 🔧 加粗線段 */
@@ -279,22 +279,29 @@
 }
         
         .transport-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
+            display: block; /* 🔧 改為block讓內容垂直排列 */
             margin-bottom: 12px;
-            flex-wrap: wrap;
-            gap: 8px;
+            position: relative; /* 🔧 為絕對定位做準備 */
         }
         
-        /* 🔧 修正：交通工具名稱樣式 - 放大字體 */
+        /* 🔧 交通工具名稱 - 留出右下角空間 */
         .transport-name {
             font-weight: 800;
-            font-size: 20px; /* 放大交通工具和車次名稱 */
+            font-size: 20px;
             color: white;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
-            flex: 1;
-            min-width: 0;
+            display: block;
+            margin-right: 80px; /* 🔧 為右下角刪除鍵留空間 */
+        }
+
+        /* 🔧 刪除鍵 - 固定在右下角 */
+        .delete-button {
+            position: absolute !important;
+            bottom: 12px !important;
+            right: 12px !important;
+            margin: 0 !important;
+            width: auto !important;
+            z-index: 30;
         }
         
         .transport-details {
@@ -361,116 +368,71 @@
         }
         
         /* 交通工具顏色 */
-/* 🌈 修正實心圓顏色 - 直接用交通工具顏色填滿 */
+/* 🌈 恢復圓點顏色 - 實心彩色圓 */
 .dot-taiwan-railway { 
-    background-color: #3b82f6; /* 🔧 實心台鐵藍 */
+    background-color: #3b82f6 !important; /* 台鐵藍 */
 }
-.transport-taiwan-railway::before {
-    background-color: #3b82f6;
-}
-
 .dot-high-speed { 
-    background-color: #f97316; /* 🔧 實心高鐵橘 */
+    background-color: #f97316 !important; /* 高鐵橘 */
 }
-.transport-high-speed::before {
-    background-color: #f97316;
-}
-
 .dot-metro-red { 
-    background-color: #ef4444; /* 🔧 實心紅線 */
+    background-color: #ef4444 !important; /* 捷運紅 */
 }
-.transport-metro-red::before {
-    background-color: #ef4444;
-}
-
 .dot-metro-blue { 
-    background-color: #3b82f6; /* 🔧 實心藍線 */
+    background-color: #3b82f6 !important; /* 捷運藍 */
 }
-.transport-metro-blue::before {
-    background-color: #3b82f6;
-}
-
 .dot-metro-green { 
-    background-color: #22c55e; /* 🔧 實心綠線 */
+    background-color: #22c55e !important; /* 捷運綠 */
 }
-.transport-metro-green::before {
-    background-color: #22c55e;
-}
-
 .dot-metro-orange { 
-    background-color: #f97316; /* 🔧 實心橘線 */
+    background-color: #f97316 !important; /* 捷運橘 */
 }
-.transport-metro-orange::before {
-    background-color: #f97316;
-}
-
 .dot-metro-yellow { 
-    background-color: #eab308; /* 🔧 實心黃線 */
+    background-color: #eab308 !important; /* 捷運黃 */
 }
-.transport-metro-yellow::before {
-    background-color: #eab308;
-}
-
 .dot-metro-purple { 
-    background-color: #a855f7; /* 🔧 實心紫線 */
+    background-color: #a855f7 !important; /* 捷運紫 */
 }
-.transport-metro-purple::before {
-    background-color: #a855f7;
-}
-
 .dot-metro-brown { 
-    background-color: #a16207; /* 🔧 實心棕線 */
+    background-color: #a16207 !important; /* 捷運棕 */
 }
-.transport-metro-brown::before {
-    background-color: #a16207;
-}
-
 .dot-metro-pink { 
-    background-color: #ec4899; /* 🔧 實心粉線 */
+    background-color: #ec4899 !important; /* 捷運粉 */
 }
-.transport-metro-pink::before {
-    background-color: #ec4899;
-}
-
 .dot-bus { 
-    background-color: #8b5cf6; /* 🔧 實心公車紫 */
+    background-color: #8b5cf6 !important; /* 公車紫 */
 }
-.transport-bus::before {
-    background-color: #8b5cf6;
-}
-
 .dot-intercity-bus { 
-    background-color: #dc2626; /* 🔧 實心客運紅 */
+    background-color: #dc2626 !important; /* 客運紅 */
 }
-.transport-intercity-bus::before {
-    background-color: #dc2626;
-}
-
 .dot-walking { 
-    background-color: #6b7280; /* 🔧 實心步行灰 */
-}
-.transport-walking::before {
-    background-color: #6b7280;
+    background-color: #6b7280 !important; /* 步行灰 */
 }
 
-        /* 🔧 修正手機版位置 */
-        @media (max-width: 768px) {
-            .container {
-                max-width: 100%;
-                border: none;
-            }
-            .grid {
-                grid-template-columns: 1fr;
-            }
-            .header-content {
-                flex-direction: column;
-                gap: 10px;
-                align-items: flex-start;
-            }
-            
-            .timeline {
-                padding-left: 70px;
-            }
+/* 🔧 修正手機版位置 */
+@media (max-width: 768px) {
+    .timeline::before {
+        left: 28px; /* 🔧 手機版時間軸位置 */
+    }
+    
+    .timeline-dot {
+        left: -34px; /* 🔧 手機版圓點位置 */
+        width: 20px;
+        height: 20px;
+    }
+    
+    .timeline-icon {
+        left: -52px; /* 🔧 手機版圖標位置 */
+        width: 44px;
+        height: 44px;
+        font-size: 20px;
+    }
+    
+    .transport-card::before {
+        left: -36px; /* 🔧 手機版線段位置 */
+        width: 6px;
+    }
+}
             
 /* 🎯 時間軸主線 - 保持灰色作為基礎 */
 .timeline::before {
