@@ -178,16 +178,16 @@
         
         .timeline {
             position: relative;
-            padding-left: 60px;
+            padding-left: 80px;
             margin: 20px 0;
         }
         
         .timeline::before {
             content: '';
             position: absolute;
-            left: 20px;
-            top: 10px;
-            bottom: 10px;
+            left: 24px;
+            top: 15px;
+            bottom: 15px;
             width: 4px;
             background: #4b5563;
             border-radius: 2px;
@@ -200,29 +200,32 @@
         
         .timeline-dot {
             position: absolute;
-            left: -46px;
-            top: 6px;
-            width: 16px;
-            height: 16px;
+            left: -50px;
+            top: 8px;
+            width: 24px;
+            height: 24px;
             border-radius: 50%;
             border: 4px solid #111827;
             z-index: 20;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
         }
         
         .timeline-icon {
             position: absolute;
-            left: -58px;
-            top: 30px;
+            left: -62px;
+            top: 50%;
+            transform: translateY(-50%);
             background: #1f2937;
             border: 3px solid #4b5563;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 16px;
+            font-size: 20px;
             z-index: 25;
-            width: 32px;
-            height: 32px;
+            width: 44px;
+            height: 44px;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.4);
         }
         
         .station-info {
@@ -262,14 +265,18 @@
         }
         
         .transport-name {
-            font-weight: 600;
-            font-size: 16px;
+            font-weight: 800;
+            font-size: 18px;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
         }
         
         .transport-details {
-            font-size: 14px;
-            color: #9ca3af;
-            line-height: 1.4;
+            font-size: 16px;
+            font-weight: 600;
+            color: white;
+            line-height: 1.5;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
         }
         
         .transfer-info {
@@ -323,6 +330,7 @@
         .dot-metro-brown, .transport-metro-brown { background-color: #a16207; border-left-color: #a16207; }
         .dot-metro-pink, .transport-metro-pink { background-color: #ec4899; border-left-color: #ec4899; }
         .dot-bus, .transport-bus { background-color: #8b5cf6; border-left-color: #8b5cf6; }
+        .dot-intercity-bus, .transport-intercity-bus { background-color: #dc2626; border-left-color: #dc2626; }
         .dot-walking, .transport-walking { background-color: #6b7280; border-left-color: #6b7280; }
         
         @media (max-width: 768px) {
@@ -439,7 +447,8 @@
                         <option value="high-speed">高鐵</option>
                         <option value="metro">捷運</option>
                         <option value="tram">輕軌</option>
-                        <option value="bus">公車/客運</option>
+                        <option value="bus">市區公車</option>
+                        <option value="intercity-bus">國道客運</option>
                         <option value="walking">步行</option>
                     </select>
                 </div>
@@ -461,10 +470,15 @@
             </div>
             
             <div class="grid">
+                <div class="form-group hide" id="seatInputGroup">
+                    <label for="seatNumber">座位號碼</label>
+                    <input type="text" id="seatNumber" placeholder="例如：3車15號、07:30班次A23">
+                </div>
                 <div class="form-group">
                     <label for="cost">費用 (NT$)</label>
                     <input type="number" id="cost" placeholder="0" min="0">
                 </div>
+            </div>
                 <div class="form-group">
                     <label for="transferTime">轉乘等待時間 (分鐘)</label>
                     <input type="number" id="transferTime" placeholder="0" min="0">
