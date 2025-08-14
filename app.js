@@ -444,17 +444,10 @@ function updateTimelinePreview() {
                 });
                 
                 // 轉乘信息
-                // 🚀 替換為分行顯示：
+                // 🚀 改回簡單版本：
 stations.push({
     type: 'transfer-info',
-    html: `
-        <div class="transfer-title">
-            🔄 轉乘
-        </div>
-        <div>
-            ${prevSegment.toStation} → ${segment.fromStation}
-        </div>
-    `
+    text: `🔄 轉乘：${prevSegment.toStation} → ${segment.fromStation}`
 });
                 
                 if (prevSegment.transferTime > 0) {
@@ -537,7 +530,7 @@ div.innerHTML = `
         // 🚀 替換為：
 } else if (item.type === 'transfer-info') {
     div.className = 'transfer-info';
-    div.innerHTML = item.html || item.text; // 支援新的html格式或舊的text格式
+    div.innerHTML = item.text;
 }
         } else if (item.type === 'transfer-time') {
             div.className = 'transfer-info';
