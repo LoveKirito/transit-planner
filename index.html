@@ -206,7 +206,7 @@
         /* 🎯 修正圓點 - 改為實心圓 + 加粗 */
 .timeline-dot {
     position: absolute;
-    left: -38px; /* 🔧 重新調整位置讓圓點在線上 */
+    left: -68px; /* 🔧 關鍵修正：精確對齊時間軸 */
     top: 50%;
     transform: translateY(-50%);
     width: 24px; /* 🔧 加大圓點 */
@@ -220,7 +220,7 @@
         /* 🎯 修正交通工具圖標位置 */
 .timeline-icon {
     position: absolute;
-    left: -58px; /* 🔧 重新調整位置 */
+    left: -80px; /* 🔧 關鍵修正：精確對齊時間軸 */
     top: 50%;
     transform: translateY(-50%);
     background: #1f2937;
@@ -270,13 +270,28 @@
 .transport-card::before {
     content: '';
     position: absolute;
-    left: -40px; /* 🔧 調整到正確位置 */
+    left: -52px; /* 🔧 關鍵修正：精確對齊時間軸 */
     top: -25px; /* 🔧 延伸更多確保連接 */
     bottom: -25px; /* 🔧 延伸更多確保連接 */
     width: 8px; /* 🔧 加粗線段 */
     border-radius: 4px;
     z-index: 15;
 }
+
+        /* 🎯 就在上面這段的「正下方」加入以下所有顏色規則： */
+.transport-taiwan-railway::before { background-color: #3b82f6; }
+.transport-high-speed::before { background-color: #f97316; }
+.transport-metro-red::before { background-color: #ef4444; }
+.transport-metro-blue::before { background-color: #3b82f6; }
+.transport-metro-green::before { background-color: #22c55e; }
+.transport-metro-orange::before { background-color: #f97316; }
+.transport-metro-yellow::before { background-color: #eab308; }
+.transport-metro-purple::before { background-color: #a855f7; }
+.transport-metro-brown::before { background-color: #a16207; }
+.transport-metro-pink::before { background-color: #ec4899; }
+.transport-bus::before { background-color: #8b5cf6; }
+.transport-intercity-bus::before { background-color: #dc2626; }
+.transport-walking::before { background-color: #6b7280; }
         
         .transport-header {
             display: block; /* 🔧 改為block讓內容垂直排列 */
@@ -287,11 +302,14 @@
         /* 🔧 交通工具名稱 - 留出右下角空間 */
         .transport-name {
             font-weight: 800;
-            font-size: 20px;
+            font-size: 18px; /* 🔧 稍微縮小避免換行 */
             color: white;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
             display: block;
             margin-right: 80px; /* 🔧 為右下角刪除鍵留空間 */
+            white-space: nowrap; /* 🔧 關鍵：防止換行 */
+            overflow: hidden; /* 🔧 關鍵：隱藏超出部分 */
+            text-overflow: ellipsis; /* 🔧 關鍵：顯示省略號 */
         }
 
         /* 🔧 刪除鍵 - 固定在右下角 */
@@ -431,20 +449,20 @@
     }
     
     .timeline-dot {
-        left: -34px; /* 🔧 手機版圓點位置 */
+        left: -64px; /* 🔧 手機版圓點位置 */
         width: 20px;
         height: 20px;
     }
     
     .timeline-icon {
-        left: -52px; /* 🔧 手機版圖標位置 */
+        left: -76px; /* 🔧 手機版圖標位置 */
         width: 44px;
         height: 44px;
         font-size: 20px;
     }
     
     .transport-card::before {
-        left: -36px; /* 🔧 手機版線段位置 */
+        left: -48px; /* 🔧 手機版連接線位置 */
         width: 6px;
     }
 }
