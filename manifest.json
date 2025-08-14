@@ -1,0 +1,120 @@
+{
+  "name": "交通轉乘記錄器",
+  "short_name": "轉乘記錄",
+  "description": "自定義交通路線規劃與記錄，完全離線使用。支援台鐵、高鐵、捷運、公車等多種交通工具的時間軸式路線規劃。",
+  "version": "1.0.0",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#1f2937",
+  "theme_color": "#1f2937",
+  "lang": "zh-TW",
+  "dir": "ltr",
+  "categories": ["travel", "utilities", "productivity", "navigation"],
+  "icons": [
+    {
+      "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNzIiIGhlaWdodD0iNzIiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHJ4PSI0IiBmaWxsPSIjMWYyOTM3Ii8+PHBhdGggZD0ibTMgOCA0IDQgNC00IDQgNCA0LTR2MTFhMiAyIDAgMCAxLTIgMkg1YTIgMiAwIDAgMS0yLTJWOHoiIGZpbGw9IiMzNDg3ZjYiLz48L3N2Zz4K",
+      "sizes": "72x72",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iOTYiIGhlaWdodD0iOTYiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHJ4PSI0IiBmaWxsPSIjMWYyOTM3Ii8+PHBhdGggZD0ibTMgOCA0IDQgNC00IDQgNCA0LTR2MTFhMiAyIDAgMCAxLTIgMkg1YTIgMiAwIDAgMS0yLTJWOHoiIGZpbGw9IiMzNDg3ZjYiLz48L3N2Zz4K",
+      "sizes": "96x96",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTI4IiBoZWlnaHQ9IjEyOCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgcng9IjQiIGZpbGw9IiMxZjI5MzciLz48cGF0aCBkPSJtMyA4IDQgNCA0LTQgNCA0IDQtNHYxMWEyIDIgMCAwIDEtMiAySDVhMiAyIDAgMCAxLTItMlY4eiIgZmlsbD0iIzM0ODdmNiIvPjwvc3ZnPgo=",
+      "sizes": "128x128",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTQ0IiBoZWlnaHQ9IjE0NCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgcng9IjQiIGZpbGw9IiMxZjI5MzciLz48cGF0aCBkPSJtMyA4IDQgNCA0LTQgNCA0IDQtNHYxMWEyIDIgMCAwIDEtMiAySDVhMiAyIDAgMCAxLTItMlY4eiIgZmlsbD0iIzM0ODdmNiIvPjwvc3ZnPgo=",
+      "sizes": "144x144",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTUyIiBoZWlnaHQ9IjE1MiIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgcng9IjQiIGZpbGw9IiMxZjI5MzciLz48cGF0aCBkPSJtMyA4IDQgNCA0LTQgNCA0IDQtNHYxMWEyIDIgMCAwIDEtMiAySDVhMiAyIDAgMCAxLTItMlY4eiIgZmlsbD0iIzM0ODdmNiIvPjwvc3ZnPgo=",
+      "sizes": "152x152",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTkyIiBoZWlnaHQ9IjE5MiIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgcng9IjQiIGZpbGw9IiMxZjI5MzciLz48cGF0aCBkPSJtMyA4IDQgNCA0LTQgNCA0IDQtNHYxMWEyIDIgMCAwIDEtMiAySDVhMiAyIDAgMCAxLTItMlY4eiIgZmlsbD0iIzM0ODdmNiIvPjwvc3ZnPgo=",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzg0IiBoZWlnaHQ9IjM4NCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgcng9IjQiIGZpbGw9IiMxZjI5MzciLz48cGF0aCBkPSJtMyA4IDQgNCA0LTQgNCA0IDQtNHYxMWEyIDIgMCAwIDEtMiAySDVhMiAyIDAgMCAxLTItMlY4eiIgZmlsbD0iIzM0ODdmNiIvPjwvc3ZnPgo=",
+      "sizes": "384x384",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgcng9IjQiIGZpbGw9IiMxZjI5MzciLz48cGF0aCBkPSJtMyA4IDQgNCA0LTQgNCA0IDQtNHYxMWEyIDIgMCAwIDEtMiAySDVhMiAyIDAgMCAxLTItMlY4eiIgZmlsbD0iIzM0ODdmNiIvPjwvc3ZnPgo=",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIwIiBoZWlnaHQ9IjU2OCIgdmlld0JveD0iMCAwIDMyMCA1NjgiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjMyMCIgaGVpZ2h0PSI1NjgiIGZpbGw9IiMxMTE4MjciLz48cmVjdCB4PSIyMCIgeT0iNDAiIHdpZHRoPSIyODAiIGhlaWdodD0iNDAiIHJ4PSI4IiBmaWxsPSIjMzc0MTUxIi8+PHRleHQgeD0iMzAiIHk9IjY1IiBmaWxsPSJ3aGl0ZSIgZm9udC1zaXplPSIxNCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiPuS6pOmAmuatjeaJv+iomOmMhzwvdGV4dD48cmVjdCB4PSIyMCIgeT0iMTAwIiB3aWR0aD0iMjgwIiBoZWlnaHQ9IjgwIiByeD0iOCIgZmlsbD0iIzFmMjkzNyIvPjx0ZXh0IHg9IjMwIiB5PSIxMjUiIGZpbGw9IiM2MGE1ZmEiIGZvbnQtc2l6ZT0iMTIiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIj7ot6/nt5ropo/ljYs8L3RleHQ+PGNpcmNsZSBjeD0iNDAiIGN5PSIxNTAiIHI9IjYiIGZpbGw9IiMzYjgyZjYiLz48dGV4dCB4PSI1NSIgeT0iMTU1IiBmaWxsPSJ3aGl0ZSIgZm9udC1zaXplPSIxMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiPjA4OjAwIOaWsOeruuermTwvdGV4dD48L3N2Zz4K",
+      "sizes": "320x568",
+      "type": "image/svg+xml",
+      "form_factor": "narrow",
+      "label": "手機版界面預覽"
+    },
+    {
+      "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTQwIiBoZWlnaHQ9IjcyMCIgdmlld0JveD0iMCAwIDU0MCA3MjAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjU0MCIgaGVpZ2h0PSI3MjAiIGZpbGw9IiMxMTE4MjciLz48cmVjdCB4PSIyMCIgeT0iNDAiIHdpZHRoPSI1MDAiIGhlaWdodD0iNjAiIHJ4PSI4IiBmaWxsPSIjMzc0MTUxIi8+PHRleHQgeD0iMzAiIHk9Ijc1IiBmaWxsPSJ3aGl0ZSIgZm9udC1zaXplPSIyMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiPuS6pOmAmuatjeaJv+iomOmMhyAtIOW5s+adv+eJiDwvdGV4dD48cmVjdCB4PSIyMCIgeT0iMTIwIiB3aWR0aD0iNTAwIiBoZWlnaHQ9IjE1MCIgcng9IjEyIiBmaWxsPSIjMWYyOTM3Ii8+PHRleHQgeD0iMzAiIHk9IjE1MCIgZmlsbD0iIzYwYTVmYSIgZm9udC1zaXplPSIxNiIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiPuW9k+WJjeaKmOe2muimj+WNizwvdGV4dD48Y2lyY2xlIGN4PSI1MCIgY3k9IjE4MCIgcj0iOCIgZmlsbD0iIzNiODJmNiIvPjx0ZXh0IHg9IjcwIiB5PSIxODUiIGZpbGw9IndoaXRlIiBmb250LXNpemU9IjE0IiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiI+MDg6MDAgdOmQhumdoue9s+i7iuaWsOeruuermTwvdGV4dD48L3N2Zz4K",
+      "sizes": "540x720",
+      "type": "image/svg+xml",
+      "form_factor": "wide",
+      "label": "平板版界面預覽"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "新增路線",
+      "short_name": "新增",
+      "description": "快速新增一條交通路線",
+      "url": "./?action=new",
+      "icons": [
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iOTYiIGhlaWdodD0iOTYiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHJ4PSI0IiBmaWxsPSIjMTBiOTgxIi8+PHBhdGggZD0iTTEyIDV2MTRtLTctN2gxNCIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiLz48L3N2Zz4K",
+          "sizes": "96x96",
+          "type": "image/svg+xml"
+        }
+      ]
+    },
+    {
+      "name": "查看路線",
+      "short_name": "查看",
+      "description": "查看已保存的交通路線",
+      "url": "./?action=view",
+      "icons": [
+        {
+          "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iOTYiIGhlaWdodD0iOTYiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHJ4PSI0IiBmaWxsPSIjMzQ4N2Y2Ii8+PHBhdGggZD0iTTMgNmgxOE0zIDEyaDE4TTMgMThoMTgiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PC9zdmc+Cg==",
+          "sizes": "96x96",
+          "type": "image/svg+xml"
+        }
+      ]
+    }
+  ],
+  "prefer_related_applications": false,
+  "related_applications": [],
+  "share_target": {
+    "action": "./",
+    "method": "GET",
+    "params": {
+      "title": "title",
+      "text": "text",
+      "url": "url"
+    }
+  }
+}
