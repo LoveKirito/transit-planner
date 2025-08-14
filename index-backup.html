@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>交通轉乘記錄器</title>
+    <meta name="description" content="自定義交通路線規劃與記錄，完全離線使用">
+    <meta name="theme-color" content="#1f2937">
+    
+    <!-- PWA 配置 -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="交通轉乘記錄器">
+    
+    <!-- PWA 圖示 -->
+    <link rel="icon" type="image/png" sizes="192x192" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTkyIiBoZWlnaHQ9IjE5MiIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgcng9IjQiIGZpbGw9IiMxZjI5MzciLz48cGF0aCBkPSJtMyA4IDQgNCA0LTQgNCA0IDQtNHYxMWEyIDIgMCAwIDEtMiAySDVhMiAyIDAgMCAxLTItMlY4eiIgZmlsbD0iIzM0ODdmNiIvPjwvc3ZnPgo=">
+    <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTkyIiBoZWlnaHQ9IjE5MiIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgcng9IjQiIGZpbGw9IiMxZjI5MzciLz48cGF0aCBkPSJtMyA4IDQgNCA0LTQgNCA0IDQtNHYxMWEyIDIgMCAwIDEtMiAySDVhMiAyIDAgMCAxLTItMlY4eiIgZmlsbD0iIzM0ODdmNiIvPjwvc3ZnPgo=">
+    
+    <style>
+* {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body { 
+            margin: 0; 
+            padding: 0; 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #111827;
+            color: #f9fafb;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #1f2937;
+            min-height: 100vh;
+            border-left: 1px solid #374151;
+            border-right: 1px solid #374151;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #374151, #4b5563);
+            padding: 20px;
+            border-bottom: 1px solid #4b5563;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .header h1 {
+            font-size: 1.8rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .pwa-badges {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .badge {
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        
+        .install-btn {
+            background: linear-gradient(135deg, #10b981, #059669);
+            cursor: pointer;
+            border: none;
+            transition: all 0.2s;
+        }
+        
+        .install-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+        }
+        
+        .card {
+            background: #1f2937;
+            border: 1px solid #374151;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .button {
+            background: #3b82f6;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+            transition: all 0.2s;
+            width: 100%;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .button:hover {
+            background: #2563eb;
+            transform: translateY(-1px);
+        }
+        
+        .button-small {
+            padding: 8px 16px;
+            font-size: 14px;
+            width: auto;
+        }
+        
+        .button-red {
+            background: #ef4444;
+        }
+        
+        .button-red:hover {
+            background: #dc2626;
+        }
+        
+        .button-green {
+            background: #10b981;
+        }
+        
+        .button-green:hover {
+            background: #059669;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #d1d5db;
+            font-weight: 500;
+        }
+        
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            background: #374151;
+            border: 1px solid #4b5563;
+            border-radius: 8px;
+            color: #f9fafb;
+            font-size: 16px;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        
+        /* 🔧 修正時間軸樣式 */
+        .timeline {
+            position: relative;
+            padding-left: 80px;
+            margin: 20px 0;
+        }
+        
+       /* 🎯 時間軸主線 */
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 32px; /* 時間軸線位置 */
+            top: 15px;
+            bottom: 15px;
+            width: 4px;
+            background: #4b5563;
+            border-radius: 2px;
+            z-index: 10;
+        }
+        
+        .timeline-item {
+            position: relative;
+            margin-bottom: 10px;
+        }
+        
+        /* 🎯 修正圓點 - 改為實心圓 + 加粗 */
+.timeline-dot {
+    position: absolute;
+    left: -38px; /* 🔧 重新調整位置讓圓點在線上 */
+    top: 50%;
+    transform: translateY(-50%);
+    width: 24px; /* 🔧 加大圓點 */
+    height: 24px; /* 🔧 加大圓點 */
+    border-radius: 50%;
+    border: none; /* 🔧 移除邊框，改為實心 */
+    z-index: 20;
+    box-shadow: 0 0 0 4px #111827; /* 🔧 用陰影做外圈效果 */
+}
+        
+        /* 🎯 修正交通工具圖標位置 */
+.timeline-icon {
+    position: absolute;
+    left: -58px; /* 🔧 重新調整位置 */
+    top: 50%;
+    transform: translateY(-50%);
+    background: #1f2937;
+    border: 3px solid #4b5563;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    z-index: 25;
+    width: 48px;
+    height: 48px;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.4);
+}
+        
+        .station-info {
+            background: #374151;
+            padding: 15px 18px;
+            border-radius: 8px;
+            margin-bottom: 8px;
+        }
+        
+        .station-time {
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            color: #60a5fa;
+            font-size: 18px;
+        }
+        
+        .station-name {
+            font-size: 20px;
+            font-weight: 600;
+            margin-top: 6px;
+        }
+        
+        .transport-card {
+    background: #1f2937;
+    border: 1px solid #4b5563;
+    border-radius: 10px;
+    padding: 18px;
+    margin: 15px 0;
+    border-left-width: 4px;
+    position: relative; /* 🔧 新增這行 */
+}
+
+/* 🔧 修正彩色線段 - 加粗且正確連接 */
+.transport-card::before {
+    content: '';
+    position: absolute;
+    left: -40px; /* 🔧 調整到正確位置 */
+    top: -25px; /* 🔧 延伸更多確保連接 */
+    bottom: -25px; /* 🔧 延伸更多確保連接 */
+    width: 8px; /* 🔧 加粗線段 */
+    border-radius: 4px;
+    z-index: 15;
+}
+        
+        .transport-header {
+            display: block; /* 🔧 改為block讓內容垂直排列 */
+            margin-bottom: 12px;
+            position: relative; /* 🔧 為絕對定位做準備 */
+        }
+        
+        /* 🔧 交通工具名稱 - 留出右下角空間 */
+        .transport-name {
+            font-weight: 800;
+            font-size: 20px;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+            display: block;
+            margin-right: 80px; /* 🔧 為右下角刪除鍵留空間 */
+        }
+
+        /* 🔧 刪除鍵 - 固定在右下角 */
+        .delete-button {
+            position: absolute !important;
+            bottom: 12px !important;
+            right: 12px !important;
+            margin: 0 !important;
+            width: auto !important;
+            z-index: 30;
+        }
+        
+        .transport-details {
+            font-size: 16px;
+            font-weight: 600;
+            color: white;
+            line-height: 1.8;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+            word-wrap: break-word;
+        }
+        
+        /* 🔧 修正轉乘資訊樣式 - 分成兩行 */
+.transfer-info {
+    background: #4b5563;
+    color: #f59e0b;
+    padding: 12px 16px;
+    border-radius: 8px;
+    font-size: 15px;
+    text-align: center;
+    margin: 12px 0;
+    border: 1px dashed #6b7280;
+    font-weight: 600;
+    line-height: 1.5;
+}
+
+        /* 🔧 新增轉乘標題樣式 */
+.transfer-title {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+        
+        .summary-card {
+            background: linear-gradient(135deg, #1f2937, #374151);
+            border: 1px solid #4b5563;
+            padding: 20px;
+            border-radius: 12px;
+            margin: 20px 0;
+        }
+        
+        .summary-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .summary-stats {
+            display: flex;
+            justify-content: space-between;
+            background: rgba(59, 130, 246, 0.1);
+            padding: 18px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+        
+        .hide {
+            display: none !important;
+        }
+        
+        /* 交通工具顏色 */
+/* 🌈 恢復圓點顏色 - 實心彩色圓 */
+.dot-taiwan-railway { 
+    background-color: #3b82f6 !important; /* 台鐵藍 */
+}
+.dot-high-speed { 
+    background-color: #f97316 !important; /* 高鐵橘 */
+}
+.dot-metro-red { 
+    background-color: #ef4444 !important; /* 捷運紅 */
+}
+.dot-metro-blue { 
+    background-color: #3b82f6 !important; /* 捷運藍 */
+}
+.dot-metro-green { 
+    background-color: #22c55e !important; /* 捷運綠 */
+}
+.dot-metro-orange { 
+    background-color: #f97316 !important; /* 捷運橘 */
+}
+.dot-metro-yellow { 
+    background-color: #eab308 !important; /* 捷運黃 */
+}
+.dot-metro-purple { 
+    background-color: #a855f7 !important; /* 捷運紫 */
+}
+.dot-metro-brown { 
+    background-color: #a16207 !important; /* 捷運棕 */
+}
+.dot-metro-pink { 
+    background-color: #ec4899 !important; /* 捷運粉 */
+}
+.dot-bus { 
+    background-color: #8b5cf6 !important; /* 公車紫 */
+}
+.dot-intercity-bus { 
+    background-color: #dc2626 !important; /* 客運紅 */
+}
+.dot-walking { 
+    background-color: #6b7280 !important; /* 步行灰 */
+}
+
+/* 🔧 修正手機版位置 */
+@media (max-width: 768px) {
+    .container {
+        max-width: 100%;
+        border: none;
+    }
+    
+    .grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .header-content {
+        flex-direction: column;
+        gap: 10px;
+        align-items: flex-start;
+    }
+    
+    .timeline::before {
+        left: 28px; /* 🔧 手機版時間軸位置 */
+    }
+    
+    .timeline-dot {
+        left: -34px; /* 🔧 手機版圓點位置 */
+        width: 20px;
+        height: 20px;
+    }
+    
+    .timeline-icon {
+        left: -52px; /* 🔧 手機版圖標位置 */
+        width: 44px;
+        height: 44px;
+        font-size: 20px;
+    }
+    
+    .transport-card::before {
+        left: -36px; /* 🔧 手機版線段位置 */
+        width: 6px;
+    }
+}
+            
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="header-content">
+                <h1>🚇 交通轉乘記錄器</h1>
+                <div class="pwa-badges">
+                    <div class="badge" id="statusBadge">PWA版本 - 載入中</div>
+                    <button class="badge install-btn hide" id="installBtn" onclick="installPWA()">
+                        📱 安裝APP
+                    </button>
+                </div>
+            </div>
+            <p style="color: #9ca3af; margin-bottom: 15px;">自定義你的交通路線，支援離線使用</p>
+            
+            <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                <button class="button button-small" onclick="showAddSegmentForm()">
+                    ➕ 新增路段
+                </button>
+                <button class="button button-small button-red" onclick="clearAllData()">
+                    🔄 清除資料
+                </button>
+            </div>
+        </div>
+
+        <!-- 狀態訊息 -->
+        <div class="card" style="background: #065f46; border-color: #10b981;">
+            <div id="statusMessage" style="color: #6ee7b7; text-align: center;">
+                ✅ 應用載入完成！開始規劃你的路線吧
+            </div>
+        </div>
+
+        <!-- 當前路線編輯 -->
+        <div class="card">
+            <h3 style="margin-bottom: 15px; color: #60a5fa;">🛤️ 當前路線規劃</h3>
+            
+            <div class="form-group">
+                <label for="routeName">路線名稱</label>
+                <input type="text" id="routeName" placeholder="例如：新竹→台北">
+            </div>
+            
+            <!-- 路線預覽 -->
+            <div id="routePreview" class="hide">
+                <h4 style="margin: 20px 0 15px 0; color: #60a5fa;">📍 路線預覽</h4>
+                <div class="timeline" id="timeline">
+                    <!-- 時間軸內容會動態生成 -->
+                </div>
+                
+                <div class="summary-stats">
+                    <div>
+                        <span style="color: #6ee7b7;">總時間：</span>
+                        <span id="totalTime" style="font-weight: bold;">0分鐘</span>
+                    </div>
+                    <div>
+                        <span style="color: #6ee7b7;">總費用：</span>
+                        <span id="totalCost" style="font-weight: bold; color: #10b981;">NT$0</span>
+                    </div>
+                </div>
+                
+                <button class="button button-green" onclick="saveRoute()">💾 儲存完整路線</button>
+                <button class="button" onclick="clearCurrentRoute()">🔄 重新規劃</button>
+            </div>
+        </div>
+
+        <!-- 新增路段表單 -->
+        <div class="card hide" id="addSegmentCard">
+            <h3 style="margin-bottom: 15px; color: #6ee7b7;">➕ 新增交通路段</h3>
+            
+            <div class="grid">
+                <div class="form-group">
+                    <label for="fromStation">起點站</label>
+                    <input type="text" id="fromStation" placeholder="例如：台鐵新竹站">
+                </div>
+                <div class="form-group">
+                    <label for="toStation">終點站</label>
+                    <input type="text" id="toStation" placeholder="例如：台鐵六家站">
+                </div>
+            </div>
+            
+            <div class="grid">
+                <div class="form-group">
+                    <label for="startTime">出發時間</label>
+                    <input type="time" id="startTime" value="08:00">
+                </div>
+                <div class="form-group">
+                    <label for="endTime">到達時間</label>
+                    <input type="time" id="endTime" value="09:00">
+                </div>
+            </div>
+            
+            <div class="grid">
+                <div class="form-group">
+                    <label for="transport">交通工具</label>
+                    <select id="transport" onchange="toggleLineInput()">
+                        <option value="taiwan-railway">台鐵</option>
+                        <option value="high-speed">高鐵</option>
+                        <option value="metro">捷運</option>
+                        <option value="tram">輕軌</option>
+                        <option value="bus">市區公車</option>
+                        <option value="intercity-bus">國道客運</option>
+                        <option value="walking">步行</option>
+                    </select>
+                </div>
+                <div class="form-group hide" id="lineInputGroup">
+                    <label for="metroLine">捷運/輕軌線路</label>
+                    <input type="text" id="metroLine" placeholder="例如：高雄捷運紅線">
+                </div>
+            </div>
+            
+            <div class="grid">
+                <div class="form-group">
+                    <label for="vehicleNumber">車次/路線號</label>
+                    <input type="text" id="vehicleNumber" placeholder="例如：自強142">
+                </div>
+                <div class="form-group">
+                    <label for="platform">月台/站台</label>
+                    <input type="text" id="platform" placeholder="例如：第2月台">
+                </div>
+            </div>
+            
+            <div class="grid">
+                <div class="form-group hide" id="seatInputGroup">
+                    <label for="seatNumber">座位號碼</label>
+                    <input type="text" id="seatNumber" placeholder="例如：3車15號、07:30班次A23">
+                </div>
+                <div class="form-group">
+                    <label for="cost">費用 (NT$)</label>
+                    <input type="number" id="cost" placeholder="0" min="0">
+                </div>
+            </div>
+                <div class="form-group">
+                    <label for="transferTime">轉乘等待時間 (分鐘)</label>
+                    <input type="number" id="transferTime" placeholder="0" min="0">
+                </div>
+            </div>
+            
+            <div style="display: flex; gap: 10px;">
+                <button class="button button-green" onclick="addSegment()">🎯 新增路段</button>
+                <button class="button" onclick="hideAddSegmentForm()">取消</button>
+            </div>
+        </div>
+
+        <!-- 已保存的路線 -->
+        <div class="card">
+            <h3 style="margin-bottom: 15px; color: #60a5fa;">📋 已保存的路線 (<span id="routeCount">1</span>)</h3>
+            <div id="savedRoutes">
+                <!-- 示例路線 -->
+                <div class="summary-card">
+                    <div class="summary-header">
+                        <div>
+                            <h4 style="color: white; margin-bottom: 5px;">新竹 → 台北（範例）</h4>
+                            <div style="color: #9ca3af; font-size: 14px;">
+                                08:00 - 09:15 · 1小時15分 · NT$265
+                            </div>
+                        </div>
+                        <div style="display: flex; gap: 8px;">
+                            <button class="button button-small" onclick="editRoute(0)" style="background: #3b82f6;">編輯</button>
+                            <button class="button button-small button-red" onclick="deleteRoute(0)">刪除</button>
+                        </div>
+                    </div>
+                    <div style="font-size: 12px; color: #6b7280;">
+                        台鐵新竹站 → 台鐵六家站 → 高鐵新竹站 → 高鐵台北站
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 使用說明 -->
+        <div class="card" style="background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(147, 51, 234, 0.1)); border-color: rgba(59, 130, 246, 0.3);">
+            <div style="display: flex; gap: 15px; align-items: flex-start;">
+                <div style="font-size: 2rem;">🚇</div>
+                <div style="flex: 1;">
+                    <h4 style="color: white; margin-bottom: 15px;">PWA版本功能特色</h4>
+                    <div style="color: #cbd5e1; font-size: 14px; line-height: 1.6;">
+                        <div style="margin-bottom: 8px;">📱 可安裝到手機桌面</div>
+                        <div style="margin-bottom: 8px;">🚇 時間軸式路線顯示</div>
+                        <div style="margin-bottom: 8px;">🌐 支援完全離線使用</div>
+                        <div style="margin-bottom: 8px;">🎨 自動顏色偵測</div>
+                        <div style="margin-bottom: 8px;">💾 資料自動本地保存</div>
+                        <div style="margin-bottom: 8px;">🔄 站名轉乘智能處理</div>
+                        <div style="margin-bottom: 8px;">🚀 快速啟動如原生App</div>
+                        <div style="margin-bottom: 8px;">♾️ 無限路段支援</div>
+                    </div>
+                    <div style="margin-top: 15px; padding: 12px; background: rgba(59, 130, 246, 0.2); border-radius: 8px; border: 1px solid rgba(59, 130, 246, 0.3);">
+                        <strong style="color: #60a5fa;">📱 安裝說明：</strong> 
+                        在Chrome/Safari中開啟此頁面，點擊右上角"安裝APP"或瀏覽器的安裝提示即可安裝到手機桌面！
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
