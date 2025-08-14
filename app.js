@@ -7,14 +7,50 @@ let savedRoutes = [];
 let routeCounter = 1;
 let deferredPrompt;
 
+// 實時保存當前路線狀態
+function saveCurrentState() {
+    try {
+        const currentState = {
+            routeName: document.getElementById('routeName')?.value || '',
+            segments: currentRouteSegments,
+            timestamp: Date.now()
+        };
+        localStorage.setItem('transitCurrentRoute', JSON.stringify(currentState));
+        console.log('當前狀態已保存');
+    } catch (error) {
+        console.error('保存當前狀態失敗:', error);
+    }
+}
+
+// 載入當前路線狀態
+function loadCurrentState() {
+    try {
+        const saved = localStorage.getItem('transitCurrentRoute');
+        if (saved) {
+            const currentState = JSON.parse(saved);
+            if (currentState.segments && currentState.segments.length > 0) {
+                currentRouteSegments = currentState.segments;
+                if (document.getElementById('routeName')) {
+                    document.getElementById('routeName').value = currentState.routeName || '';
+                }
+                updateTimelinePreview();
+                console.log('當前狀態已恢復');
+            }
+        }
+    } catch (error) {
+        console.error('載入當前狀態失敗:', error);
+    }
+}
+
 // 交通工具配置
 const transportConfig = {
-    'taiwan-railway': { name: '台鐵', color: 'taiwan-railway', icon: '🚂' },
-    'high-speed': { name: '高鐵', color: 'high-speed', icon: '🚄' },
-    'metro': { name: '捷運', color: 'metro-blue', icon: '🚇' },
-    'tram': { name: '輕軌', color: 'metro-orange', icon: '🚊' },
-    'bus': { name: '公車/客運', color: 'bus', icon: '🚌' },
-    'walking': { name: '步行', color: 'walking', icon: '🚶' }
+    'taiwan-railway': { name: '台鐵', color: 'taiwan-railway', icon: '🚂', needsSeat: true },
+    'high-speed': { name: '高鐵', color: 'high-speed', icon: '🚄', needsSeat: true },
+    'metro': { name: '捷運', color: 'metro-blue', icon: '🚇', needsSeat: false },
+    'tram': { name: '輕軌', color: 'metro-orange', icon: '🚊', needsSeat: false },
+    'bus': { name: '市區公車', color: 'bus', icon: '🚌', needsSeat: false },
+    'intercity-bus': { name: '國道客運', color: 'intercity-bus', icon: '🚍', needsSeat: true },
+    'walking': { name: '步行', color: 'walking', icon: '🚶', needsSeat: false }
 };
 
 // 顏色關鍵字對應
@@ -39,6 +75,14 @@ document.addEventListener('DOMContentLoaded', function() {
     // 初始化 PWA 功能
     initializePWA();
     
+    // 添加路線名稱輸入的實時保存
+    const routeNameInput = document.getElementById('routeName');
+    if (routeNameInput) {
+        routeNameInput.addEventListener('input', function() {
+            saveCurrentState();
+        });
+    }
+    
     // 更新狀態
     updateStatus('🎯 應用載入完成！開始規劃你的路線吧');
     updateOnlineStatus();
@@ -56,6 +100,9 @@ function loadSavedData() {
             updateSavedRoutesDisplay();
             updateRouteCount();
         }
+        
+        // 載入當前編輯中的路線狀態
+        loadCurrentState();
     } catch (error) {
         console.error('載入資料失敗:', error);
     }
@@ -187,16 +234,26 @@ function hideAddSegmentForm() {
     clearSegmentForm();
 }
 
-// 切換線路輸入框顯示
+// 切換線路輸入框和座位號碼顯示
 function toggleLineInput() {
     const transport = document.getElementById('transport').value;
     const lineGroup = document.getElementById('lineInputGroup');
+    const seatGroup = document.getElementById('seatInputGroup');
     
+    // 顯示/隱藏線路輸入框
     if (transport === 'metro' || transport === 'tram') {
         lineGroup.classList.remove('hide');
     } else {
         lineGroup.classList.add('hide');
         document.getElementById('metroLine').value = '';
+    }
+    
+    // 顯示/隱藏座位號碼輸入框
+    if (transportConfig[transport]?.needsSeat) {
+        seatGroup.classList.remove('hide');
+    } else {
+        seatGroup.classList.add('hide');
+        document.getElementById('seatNumber').value = '';
     }
 }
 
@@ -212,9 +269,10 @@ function addSegment() {
         const cost = parseInt(document.getElementById('cost').value) || 0;
         const vehicleNumber = document.getElementById('vehicleNumber').value.trim();
         const platform = document.getElementById('platform').value.trim();
+        const seatNumber = document.getElementById('seatNumber')?.value.trim() || '';
         const transferTime = parseInt(document.getElementById('transferTime').value) || 0;
         
-        console.log('添加路段:', { fromStation, toStation, startTime, endTime, transport, metroLine });
+        console.log('添加路段:', { fromStation, toStation, startTime, endTime, transport, metroLine, seatNumber });
         
         if (!fromStation || !toStation || !startTime || !endTime) {
             alert('請填寫完整的路段資訊！');
@@ -248,6 +306,7 @@ function addSegment() {
             cost,
             vehicleNumber,
             platform,
+            seatNumber,
             transferTime,
             duration
         };
@@ -255,6 +314,7 @@ function addSegment() {
         currentRouteSegments.push(segment);
         console.log('路段已添加:', segment);
         updateTimelinePreview();
+        saveCurrentState(); // 立即保存當前狀態
         hideAddSegmentForm();
         updateStatus(`✅ 路段已新增！目前共${currentRouteSegments.length}段`);
         
@@ -273,8 +333,13 @@ function clearSegmentForm() {
     document.getElementById('platform').value = '';
     document.getElementById('transferTime').value = '';
     document.getElementById('metroLine').value = '';
+    document.getElementById('seatNumber').value = '';
     document.getElementById('lineInputGroup').classList.add('hide');
+    document.getElementById('seatInputGroup').classList.add('hide');
     document.getElementById('transport').value = 'taiwan-railway';
+    
+    // 重新觸發顯示邏輯
+    toggleLineInput();
 }
 
 // 更新時間軸預覽
@@ -349,6 +414,7 @@ function updateTimelinePreview() {
             icon: transportConfig[segment.transport].icon,
             vehicleNumber: segment.vehicleNumber,
             platform: segment.platform,
+            seatNumber: segment.seatNumber,
             duration: segment.duration,
             cost: segment.cost,
             segmentIndex: index
@@ -393,8 +459,9 @@ function updateTimelinePreview() {
                     <div class="transport-details">
                         ${item.vehicleNumber ? `🚂 ${item.vehicleNumber}` : ''}
                         ${item.platform ? ` | 📍 ${item.platform}` : ''}
+                        ${item.seatNumber ? ` | 💺 ${item.seatNumber}` : ''}
                         <br>⏱️ 行程時間 ${formatDuration(item.duration)}
-                        ${item.cost > 0 ? ` | 💰 NT$${item.cost}` : ''}
+                        ${item.cost > 0 ? ` | 💰 NT${item.cost}` : ''}
                     </div>
                 </div>
             `;
@@ -429,6 +496,7 @@ function removeSegment(index) {
         if (confirm('確定要刪除這個路段嗎？')) {
             currentRouteSegments.splice(index, 1);
             updateTimelinePreview();
+            saveCurrentState(); // 立即保存狀態
             updateStatus('🗑️ 路段已刪除！');
         }
     }
@@ -468,7 +536,7 @@ function saveRoute() {
     saveData();
     updateSavedRoutesDisplay();
     updateRouteCount();
-    clearCurrentRoute();
+    clearCurrentRoute(); // 這會清除localStorage中的當前狀態
     updateStatus('🎉 路線儲存成功！');
 }
 
@@ -478,6 +546,9 @@ function clearCurrentRoute() {
     document.getElementById('routeName').value = '';
     document.getElementById('routePreview').classList.add('hide');
     hideAddSegmentForm();
+    
+    // 清除保存的當前狀態
+    localStorage.removeItem('transitCurrentRoute');
     
     // 重設時間
     document.getElementById('startTime').value = '08:00';
@@ -520,6 +591,7 @@ function editRoute(index) {
     currentRouteSegments = [...route.segments];
     document.getElementById('routeName').value = route.name;
     updateTimelinePreview();
+    saveCurrentState(); // 保存當前狀態
     updateStatus('📝 路線載入完成，可以進行編輯');
 }
 
@@ -540,6 +612,7 @@ function clearAllData() {
         savedRoutes = [];
         clearCurrentRoute();
         localStorage.removeItem('transitRoutes');
+        localStorage.removeItem('transitCurrentRoute'); // 同時清除當前狀態
         updateSavedRoutesDisplay();
         updateRouteCount();
         updateStatus('🔄 所有資料已清除！');
