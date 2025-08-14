@@ -185,16 +185,17 @@
             margin: 20px 0;
         }
         
-        /* 🔧 修正：時間軸主線，確保垂直居中 */
+       /* 🎯 時間軸主線 */
         .timeline::before {
             content: '';
             position: absolute;
-            left: 24px;
+            left: 24px; /* 時間軸線位置 */
             top: 15px;
             bottom: 15px;
             width: 4px;
             background: #4b5563;
             border-radius: 2px;
+            z-index: 10;
         }
         
         .timeline-item {
@@ -202,38 +203,38 @@
             margin-bottom: 10px;
         }
         
-        /* 🔧 修正：圓點樣式，確保完美圓形且居中 */
-        .timeline-dot {
-            position: absolute;
-            left: -54px;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            border: 4px solid #111827;
-            z-index: 20;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-        }
+        /* 🎯 修正圓點 - 改為實心圓 + 加粗 */
+.timeline-dot {
+    position: absolute;
+    left: -46px; /* 🔧 重新調整位置讓圓點在線上 */
+    top: 50%;
+    transform: translateY(-50%);
+    width: 24px; /* 🔧 加大圓點 */
+    height: 24px; /* 🔧 加大圓點 */
+    border-radius: 50%;
+    border: none; /* 🔧 移除邊框，改為實心 */
+    z-index: 20;
+    box-shadow: 0 0 0 4px #111827; /* 🔧 用陰影做外圈效果 */
+}
         
-        /* 🔧 修正：交通工具圖標，確保居中對齊 */
-        .timeline-icon {
-            position: absolute;
-            left: -74px;
-            top: 50%;
-            transform: translateY(-50%);
-            background: #1f2937;
-            border: 3px solid #4b5563;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 22px;
-            z-index: 25;
-            width: 48px;
-            height: 48px;
-            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.4);
-        }
+        /* 🎯 修正交通工具圖標位置 */
+.timeline-icon {
+    position: absolute;
+    left: -66px; /* 🔧 重新調整位置 */
+    top: 50%;
+    transform: translateY(-50%);
+    background: #1f2937;
+    border: 3px solid #4b5563;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    z-index: 25;
+    width: 48px;
+    height: 48px;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.4);
+}
         
         .station-info {
             background: #374151;
@@ -265,15 +266,15 @@
     position: relative; /* 🔧 新增這行 */
 }
 
-/* 🚀 新增：交通工具卡片的彩色線段 - TransTaiwan風格 */
+/* 🔧 修正彩色線段 - 加粗且正確連接 */
 .transport-card::before {
     content: '';
     position: absolute;
-    left: -56px;
-    top: -20px;
-    bottom: -20px;
-    width: 6px;
-    border-radius: 3px;
+    left: -48px; /* 🔧 調整到正確位置 */
+    top: -25px; /* 🔧 延伸更多確保連接 */
+    bottom: -25px; /* 🔧 延伸更多確保連接 */
+    width: 8px; /* 🔧 加粗線段 */
+    border-radius: 4px;
     z-index: 15;
 }
         
@@ -305,17 +306,30 @@
             word-wrap: break-word;
         }
         
-        .transfer-info {
-            background: #4b5563;
-            color: #f59e0b;
-            padding: 10px 14px;
-            border-radius: 6px;
-            font-size: 15px;
-            text-align: center;
-            margin: 10px 0;
-            border: 1px dashed #6b7280;
-            font-weight: 600;
-        }
+        /* 🔧 修正轉乘資訊樣式 - 分成兩行 */
+.transfer-info {
+    background: #4b5563;
+    color: #f59e0b;
+    padding: 12px 16px;
+    border-radius: 8px;
+    font-size: 15px;
+    text-align: center;
+    margin: 12px 0;
+    border: 1px dashed #6b7280;
+    font-weight: 600;
+    line-height: 1.5;
+}
+
+        /* 🔧 新增轉乘標題樣式 */
+.transfer-title {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
         
         .summary-card {
             background: linear-gradient(135deg, #1f2937, #374151);
@@ -347,123 +361,99 @@
         }
         
         /* 交通工具顏色 */
-/* 🌈 台鐵 - 藍色系統 */
+/* 🌈 修正實心圓顏色 - 直接用交通工具顏色填滿 */
 .dot-taiwan-railway { 
-    background-color: #1f2937; /* 固定內部 */
-    border-color: #3b82f6; /* 台鐵藍邊框 */
+    background-color: #3b82f6; /* 🔧 實心台鐵藍 */
 }
 .transport-taiwan-railway::before {
-    background-color: #3b82f6; /* 台鐵藍線段 */
+    background-color: #3b82f6;
 }
 
-/* 🌈 高鐵 - 橘色系統 */
 .dot-high-speed { 
-    background-color: #1f2937; /* 固定內部 */
-    border-color: #f97316; /* 高鐵橘邊框 */
+    background-color: #f97316; /* 🔧 實心高鐵橘 */
 }
 .transport-high-speed::before {
-    background-color: #f97316; /* 高鐵橘線段 */
+    background-color: #f97316;
 }
 
-/* 🌈 捷運紅線 */
 .dot-metro-red { 
-    background-color: #1f2937; /* 固定內部 */
-    border-color: #ef4444; /* 紅線邊框 */
+    background-color: #ef4444; /* 🔧 實心紅線 */
 }
 .transport-metro-red::before {
-    background-color: #ef4444; /* 紅線線段 */
+    background-color: #ef4444;
 }
 
-/* 🌈 捷運藍線 */
 .dot-metro-blue { 
-    background-color: #1f2937; /* 固定內部 */
-    border-color: #3b82f6; /* 藍線邊框 */
+    background-color: #3b82f6; /* 🔧 實心藍線 */
 }
 .transport-metro-blue::before {
-    background-color: #3b82f6; /* 藍線線段 */
+    background-color: #3b82f6;
 }
 
-/* 🌈 捷運綠線 */
 .dot-metro-green { 
-    background-color: #1f2937; /* 固定內部 */
-    border-color: #22c55e; /* 綠線邊框 */
+    background-color: #22c55e; /* 🔧 實心綠線 */
 }
 .transport-metro-green::before {
-    background-color: #22c55e; /* 綠線線段 */
+    background-color: #22c55e;
 }
 
-/* 🌈 捷運橘線 */
 .dot-metro-orange { 
-    background-color: #1f2937; /* 固定內部 */
-    border-color: #f97316; /* 橘線邊框 */
+    background-color: #f97316; /* 🔧 實心橘線 */
 }
 .transport-metro-orange::before {
-    background-color: #f97316; /* 橘線線段 */
+    background-color: #f97316;
 }
 
-/* 🌈 捷運黃線 */
 .dot-metro-yellow { 
-    background-color: #1f2937; /* 固定內部 */
-    border-color: #eab308; /* 黃線邊框 */
+    background-color: #eab308; /* 🔧 實心黃線 */
 }
 .transport-metro-yellow::before {
-    background-color: #eab308; /* 黃線線段 */
+    background-color: #eab308;
 }
 
-/* 🌈 捷運紫線 */
 .dot-metro-purple { 
-    background-color: #1f2937; /* 固定內部 */
-    border-color: #a855f7; /* 紫線邊框 */
+    background-color: #a855f7; /* 🔧 實心紫線 */
 }
 .transport-metro-purple::before {
-    background-color: #a855f7; /* 紫線線段 */
+    background-color: #a855f7;
 }
 
-/* 🌈 捷運棕線 */
 .dot-metro-brown { 
-    background-color: #1f2937; /* 固定內部 */
-    border-color: #a16207; /* 棕線邊框 */
+    background-color: #a16207; /* 🔧 實心棕線 */
 }
 .transport-metro-brown::before {
-    background-color: #a16207; /* 棕線線段 */
+    background-color: #a16207;
 }
 
-/* 🌈 捷運粉線 */
 .dot-metro-pink { 
-    background-color: #1f2937; /* 固定內部 */
-    border-color: #ec4899; /* 粉線邊框 */
+    background-color: #ec4899; /* 🔧 實心粉線 */
 }
 .transport-metro-pink::before {
-    background-color: #ec4899; /* 粉線線段 */
+    background-color: #ec4899;
 }
 
-/* 🌈 公車系統 */
 .dot-bus { 
-    background-color: #1f2937; /* 固定內部 */
-    border-color: #8b5cf6; /* 公車紫邊框 */
+    background-color: #8b5cf6; /* 🔧 實心公車紫 */
 }
 .transport-bus::before {
-    background-color: #8b5cf6; /* 公車紫線段 */
+    background-color: #8b5cf6;
 }
 
-/* 🌈 國道客運 */
 .dot-intercity-bus { 
-    background-color: #1f2937; /* 固定內部 */
-    border-color: #dc2626; /* 客運紅邊框 */
+    background-color: #dc2626; /* 🔧 實心客運紅 */
 }
 .transport-intercity-bus::before {
-    background-color: #dc2626; /* 客運紅線段 */
+    background-color: #dc2626;
 }
 
-/* 🌈 步行 */
 .dot-walking { 
-    background-color: #1f2937; /* 固定內部 */
-    border-color: #6b7280; /* 步行灰邊框 */
+    background-color: #6b7280; /* 🔧 實心步行灰 */
 }
 .transport-walking::before {
-    background-color: #6b7280; /* 步行灰線段 */
+    background-color: #6b7280;
 }
-        
+
+        /* 🔧 修正手機版位置 */
         @media (max-width: 768px) {
             .container {
                 max-width: 100%;
@@ -498,11 +488,11 @@
 /* 🎯 圓點基礎樣式 - 固定內部深色 + 可變彩色邊框 + 加粗 */
 .timeline-dot {
     position: absolute;
-    left: -45px;
+    left: -37px; /* 🔧 手機版圓點位置 */
     top: 50%;
     transform: translateY(-50%);
-    width: 18px;
-    height: 18px;
+    width: 20px;
+    height: 20px;
     border-radius: 50%;
     background-color: #1f2937; /* 🎯 固定內部顏色 = app背景色 */
     border-width: 3px; /* 🎯 加粗邊框 */
@@ -515,7 +505,7 @@
            /* 🎯 交通工具圖標 */
 .timeline-icon {
     position: absolute;
-    left: -63px;
+    left: -55px; /* 🔧 手機版圖標位置 */
     top: 50%;
     transform: translateY(-50%);
     background: #1f2937;
@@ -532,7 +522,7 @@
 }
 
     .transport-card::before {
-    left: -42px;
+    left: -32px; /* 🔧 手機版線段位置 */
     width: 5px;
 }
         }
