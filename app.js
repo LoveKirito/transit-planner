@@ -447,7 +447,7 @@ function updateTimelinePreview() {
                 // 🚀 改回簡單版本：
 stations.push({
     type: 'transfer-info',
-    text: `🔄 轉乘：${prevSegment.toStation} → ${segment.fromStation}`
+    text: `🔄 轉乘<br>${prevSegment.toStation} → ${segment.fromStation}`
 });
                 
                 if (prevSegment.transferTime > 0) {
@@ -512,24 +512,24 @@ stations.forEach((item) => {
         div.className = 'timeline-item';
         div.style.position = 'relative';
         div.innerHTML = `
-            <div class="timeline-icon">
-                ${item.icon}
-            </div>
-            <div class="transport-card transport-${item.transportColor}">
-                <div class="transport-header">
-                    <span class="transport-name">
-                        ${item.transportName}${item.vehicleNumber ? ` ${item.vehicleNumber}` : ''}
-                    </span>
-                    <button class="button button-small button-red" onclick="removeSegment(${item.segmentIndex})" style="margin: 0;">刪除</button>
-                </div>
-                <div class="transport-details">
-                    ${item.platform ? `📍 ${item.platform}` : ''}
-                    ${item.seatNumber ? `${item.platform ? ' | ' : ''}💺 ${item.seatNumber}` : ''}
-                    <br>⏱️ 行程時間 ${formatDuration(item.duration)}
-                    <br>💰 NT$${item.cost}
-                </div>
-            </div>
-        `;
+    <div class="timeline-icon">
+        ${item.icon}
+    </div>
+    <div class="transport-card transport-${item.transportColor}">
+        <div class="transport-header">
+            <span class="transport-name">
+                ${item.transportName}${item.vehicleNumber ? ` ${item.vehicleNumber}` : ''}
+            </span>
+        </div>
+        <div class="transport-details">
+            ${item.platform ? `📍 ${item.platform}` : ''}
+            ${item.seatNumber ? `${item.platform ? ' | ' : ''}💺 ${item.seatNumber}` : ''}
+            <br>⏱️ 行程時間 ${formatDuration(item.duration)}
+            <br>💰 NT$${item.cost}
+        </div>
+        <button class="button button-small button-red delete-button" onclick="removeSegment(${item.segmentIndex})">刪除</button>
+    </div>
+`;
     } else if (item.type === 'transfer-info') {
         div.className = 'transfer-info';
         div.innerHTML = item.text;
