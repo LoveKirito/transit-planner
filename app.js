@@ -6,41 +6,84 @@ let currentRouteSegments = [];
 let savedRoutes = [];
 let routeCounter = 1;
 let deferredPrompt;
+let isDataLoaded = false;
 
-// 實時保存當前路線狀態
+// 強化的實時保存當前路線狀態
 function saveCurrentState() {
     try {
+        const routeNameElement = document.getElementById('routeName');
         const currentState = {
-            routeName: document.getElementById('routeName')?.value || '',
+            routeName: routeNameElement ? routeNameElement.value || '' : '',
             segments: currentRouteSegments,
-            timestamp: Date.now()
+            timestamp: Date.now(),
+            version: '1.0'
         };
         localStorage.setItem('transitCurrentRoute', JSON.stringify(currentState));
-        console.log('當前狀態已保存');
+        // 同時保存到一個備用key
+        localStorage.setItem('transitCurrentRoute_backup', JSON.stringify(currentState));
+        console.log('當前狀態已保存:', currentState);
     } catch (error) {
         console.error('保存當前狀態失敗:', error);
     }
 }
 
-// 載入當前路線狀態
+// 強化的載入當前路線狀態
 function loadCurrentState() {
     try {
-        const saved = localStorage.getItem('transitCurrentRoute');
+        let saved = localStorage.getItem('transitCurrentRoute');
+        // 如果主要保存失敗，嘗試備用保存
+        if (!saved) {
+            saved = localStorage.getItem('transitCurrentRoute_backup');
+        }
+        
         if (saved) {
             const currentState = JSON.parse(saved);
             if (currentState.segments && currentState.segments.length > 0) {
                 currentRouteSegments = currentState.segments;
-                if (document.getElementById('routeName')) {
-                    document.getElementById('routeName').value = currentState.routeName || '';
-                }
-                updateTimelinePreview();
-                console.log('當前狀態已恢復');
+                
+                // 確保DOM元素存在後再設置值
+                setTimeout(() => {
+                    const routeNameElement = document.getElementById('routeName');
+                    if (routeNameElement && currentState.routeName) {
+                        routeNameElement.value = currentState.routeName;
+                    }
+                    updateTimelinePreview();
+                    console.log('當前狀態已恢復:', currentState);
+                }, 100);
+                
+                return true;
             }
         }
+        return false;
     } catch (error) {
         console.error('載入當前狀態失敗:', error);
+        return false;
     }
 }
+
+// 頁面可見性變化時保存數據
+document.addEventListener('visibilitychange', function() {
+    if (document.visibilityState === 'hidden') {
+        console.log('頁面隱藏，保存數據');
+        saveCurrentState();
+        saveData();
+    }
+});
+
+// 頁面卸載前保存數據
+window.addEventListener('beforeunload', function() {
+    console.log('頁面即將卸載，保存數據');
+    saveCurrentState();
+    saveData();
+});
+
+// 定期自動保存（每30秒）
+setInterval(function() {
+    if (currentRouteSegments.length > 0) {
+        saveCurrentState();
+        console.log('定期自動保存執行');
+    }
+}, 30000);
 
 // 交通工具配置
 const transportConfig = {
@@ -69,30 +112,42 @@ const colorMapping = {
 document.addEventListener('DOMContentLoaded', function() {
     console.log('交通轉乘記錄器載入中...');
     
-    // 載入保存的資料
-    loadSavedData();
-    
-    // 初始化 PWA 功能
-    initializePWA();
-    
-    // 添加路線名稱輸入的實時保存
-    const routeNameInput = document.getElementById('routeName');
-    if (routeNameInput) {
-        routeNameInput.addEventListener('input', function() {
-            saveCurrentState();
-        });
-    }
-    
-    // 更新狀態
-    updateStatus('🎯 應用載入完成！開始規劃你的路線吧');
-    updateOnlineStatus();
-    
-    console.log('應用初始化完成');
+    // 確保DOM完全載入後再初始化
+    setTimeout(function() {
+        // 載入保存的資料
+        loadSavedData();
+        
+        // 初始化 PWA 功能
+        initializePWA();
+        
+        // 添加路線名稱輸入的實時保存
+        const routeNameInput = document.getElementById('routeName');
+        if (routeNameInput) {
+            routeNameInput.addEventListener('input', function() {
+                saveCurrentState();
+            });
+            
+            // 失去焦點時也保存
+            routeNameInput.addEventListener('blur', function() {
+                saveCurrentState();
+            });
+        }
+        
+        // 標記數據已載入
+        isDataLoaded = true;
+        
+        // 更新狀態
+        updateStatus('🎯 應用載入完成！資料已恢復');
+        updateOnlineStatus();
+        
+        console.log('應用初始化完成');
+    }, 200);
 });
 
-// 載入保存的資料
+// 強化版載入保存的資料
 function loadSavedData() {
     try {
+        // 載入已保存的路線
         const saved = localStorage.getItem('transitRoutes');
         if (saved) {
             savedRoutes = JSON.parse(saved);
@@ -102,7 +157,12 @@ function loadSavedData() {
         }
         
         // 載入當前編輯中的路線狀態
-        loadCurrentState();
+        const loaded = loadCurrentState();
+        if (loaded) {
+            console.log('已恢復上次編輯的路線');
+        }
+        
+        console.log('數據載入完成');
     } catch (error) {
         console.error('載入資料失敗:', error);
     }
