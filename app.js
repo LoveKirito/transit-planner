@@ -493,52 +493,53 @@ stations.push({
     });
     
     // 渲染所有站點和交通工具
-    stations.forEach((item) => {
-        const div = document.createElement('div');
-        
-        if (item.type === 'station') {
-            div.className = 'timeline-item';
-            div.innerHTML = `
-                <div class="timeline-dot dot-${item.color}"></div>
-                <div class="station-info">
-                    <div class="station-time">${item.time}</div>
-                    <div class="station-name">${item.name}</div>
+    // 🔧 在 updateTimelinePreview() 函數中，找到 stations.forEach() 部分
+// 大約在第334行開始，替換整個 forEach 邏輯：
+
+stations.forEach((item) => {
+    const div = document.createElement('div');
+    
+    if (item.type === 'station') {
+        div.className = 'timeline-item';
+        div.innerHTML = `
+            <div class="timeline-dot dot-${item.color}"></div>
+            <div class="station-info">
+                <div class="station-time">${item.time}</div>
+                <div class="station-name">${item.name}</div>
+            </div>
+        `;
+    } else if (item.type === 'transport') {
+        div.className = 'timeline-item';
+        div.style.position = 'relative';
+        div.innerHTML = `
+            <div class="timeline-icon">
+                ${item.icon}
+            </div>
+            <div class="transport-card transport-${item.transportColor}">
+                <div class="transport-header">
+                    <span class="transport-name">
+                        ${item.transportName}${item.vehicleNumber ? ` ${item.vehicleNumber}` : ''}
+                    </span>
+                    <button class="button button-small button-red" onclick="removeSegment(${item.segmentIndex})" style="margin: 0;">刪除</button>
                 </div>
-            `;
-        } else if (item.type === 'transport') {
-            div.className = 'timeline-item';
-            div.style.position = 'relative';
-div.innerHTML = `
-    <div class="timeline-icon">
-        ${item.icon}
-    </div>
-    <div class="transport-card transport-${item.transportColor}">
-        <div class="transport-header">
-            <span class="transport-name">
-                ${item.transportName}${item.vehicleNumber ? ` ${item.vehicleNumber}` : ''}
-            </span>
-            <button class="button button-small button-red" onclick="removeSegment(${item.segmentIndex})" style="margin: 0;">刪除</button>
-        </div>
-        <div class="transport-details">
-            ${item.platform ? `📍 ${item.platform}` : ''}
-            ${item.seatNumber ? `${item.platform ? ' | ' : ''}💺 ${item.seatNumber}` : ''}
-            <br>⏱️ 行程時間 ${formatDuration(item.duration)}
-            <br>💰 NT$${item.cost}
-        </div>
-    </div>
-`;
-        // 🚀 替換為：
-} else if (item.type === 'transfer-info') {
-    div.className = 'transfer-info';
-    div.innerHTML = item.text;
-}
-        } else if (item.type === 'transfer-time') {
-            div.className = 'transfer-info';
-            div.innerHTML = item.text;
-        }
-        
-        timeline.appendChild(div);
-    });
+                <div class="transport-details">
+                    ${item.platform ? `📍 ${item.platform}` : ''}
+                    ${item.seatNumber ? `${item.platform ? ' | ' : ''}💺 ${item.seatNumber}` : ''}
+                    <br>⏱️ 行程時間 ${formatDuration(item.duration)}
+                    <br>💰 NT$${item.cost}
+                </div>
+            </div>
+        `;
+    } else if (item.type === 'transfer-info') {
+        div.className = 'transfer-info';
+        div.innerHTML = item.text;
+    } else if (item.type === 'transfer-time') {
+        div.className = 'transfer-info';
+        div.innerHTML = item.text;
+    }
+    
+    timeline.appendChild(div);
+});
     
     // 計算總時間
     if (currentRouteSegments.length > 0) {
