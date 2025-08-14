@@ -444,10 +444,18 @@ function updateTimelinePreview() {
                 });
                 
                 // 轉乘信息
-                stations.push({
-                    type: 'transfer-info',
-                    text: `🔄 轉乘：${prevSegment.toStation} → ${segment.fromStation}`
-                });
+                // 🚀 替換為分行顯示：
+stations.push({
+    type: 'transfer-info',
+    html: `
+        <div class="transfer-title">
+            🔄 轉乘
+        </div>
+        <div>
+            ${prevSegment.toStation} → ${segment.fromStation}
+        </div>
+    `
+});
                 
                 if (prevSegment.transferTime > 0) {
                     stations.push({
@@ -521,13 +529,16 @@ div.innerHTML = `
         <div class="transport-details">
             ${item.platform ? `📍 ${item.platform}` : ''}
             ${item.seatNumber ? `${item.platform ? ' | ' : ''}💺 ${item.seatNumber}` : ''}
-            ${(item.platform || item.seatNumber) ? '<br>' : ''}⏱️ 行程時間 ${formatDuration(item.duration)}${item.cost > 0 ? ` | 💰 NT${item.cost}` : ''}
+            <br>⏱️ 行程時間 ${formatDuration(item.duration)}
+            <br>💰 NT$${item.cost}
         </div>
     </div>
 `;
-        } else if (item.type === 'transfer-info') {
-            div.className = 'transfer-info';
-            div.innerHTML = item.text;
+        // 🚀 替換為：
+} else if (item.type === 'transfer-info') {
+    div.className = 'transfer-info';
+    div.innerHTML = item.html || item.text; // 支援新的html格式或舊的text格式
+}
         } else if (item.type === 'transfer-time') {
             div.className = 'transfer-info';
             div.innerHTML = item.text;
