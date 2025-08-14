@@ -27,7 +27,7 @@
 
 ## 📱 線上體驗
 
-**GitHub Pages部署：** [https://yourusername.github.io/transit-planner](https://yourusername.github.io/transit-planner)
+**GitHub Pages部署：** [https://LoveKirito.github.io/transit-planner](https://LoveKirito.github.io/transit-planner)
 
 ### 安裝到手機
 1. 用手機瀏覽器開啟上述網址
