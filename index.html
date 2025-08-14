@@ -189,7 +189,7 @@
         .timeline::before {
             content: '';
             position: absolute;
-            left: 40px; /* 調整到正確的中心位置 */
+            left: 40px;
             top: 15px;
             bottom: 15px;
             width: 4px;
@@ -205,7 +205,7 @@
         /* 🔧 修正：圓點樣式，確保完美圓形且居中 */
         .timeline-dot {
             position: absolute;
-            left: -30px; /* 調整位置讓圓點在時間軸線上 */
+            left: -30px;
             top: 50%;
             transform: translateY(-50%);
             width: 20px;
@@ -219,7 +219,7 @@
         /* 🔧 修正：交通工具圖標，確保居中對齊 */
         .timeline-icon {
             position: absolute;
-            left: -50px; /* 調整位置讓圖標在時間軸線上 */
+            left: -50px;
             top: 50%;
             transform: translateY(-50%);
             background: #1f2937;
@@ -228,7 +228,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 22px; /* 稍微放大圖標 */
+            font-size: 22px;
             z-index: 25;
             width: 48px;
             height: 48px;
@@ -237,7 +237,7 @@
         
         .station-info {
             background: #374151;
-            padding: 15px 18px; /* 增加內距 */
+            padding: 15px 18px;
             border-radius: 8px;
             margin-bottom: 8px;
         }
@@ -246,11 +246,11 @@
             font-family: 'Courier New', monospace;
             font-weight: bold;
             color: #60a5fa;
-            font-size: 18px; /* 放大時間字體 */
+            font-size: 18px;
         }
         
         .station-name {
-            font-size: 20px; /* 放大站名字體 */
+            font-size: 20px;
             font-weight: 600;
             margin-top: 6px;
         }
@@ -259,7 +259,7 @@
             background: #1f2937;
             border: 1px solid #4b5563;
             border-radius: 10px;
-            padding: 18px; /* 增加內距 */
+            padding: 18px;
             margin: 15px 0;
             border-left-width: 4px;
         }
@@ -267,37 +267,37 @@
         .transport-header {
             display: flex;
             justify-content: space-between;
-            align-items: flex-start; /* 改為頂部對齊 */
+            align-items: flex-start;
             margin-bottom: 12px;
-            flex-wrap: wrap; /* 允許換行 */
+            flex-wrap: wrap;
             gap: 8px;
         }
         
-        /* 🔧 修正：交通工具名稱和車次樣式 */
+        /* 🔧 修正：交通工具名稱樣式 - 放大字體 */
         .transport-name {
             font-weight: 800;
-            font-size: 20px; /* 放大交通工具名稱 */
+            font-size: 20px; /* 放大交通工具和車次名稱 */
             color: white;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
             flex: 1;
-            min-width: 0; /* 允許縮小 */
+            min-width: 0;
         }
         
         .transport-details {
-            font-size: 16px; /* 稍微放大詳細資訊 */
+            font-size: 16px;
             font-weight: 600;
             color: white;
-            line-height: 1.6; /* 增加行高 */
+            line-height: 1.8;
             text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
-            word-wrap: break-word; /* 允許長文字換行 */
+            word-wrap: break-word;
         }
         
         .transfer-info {
             background: #4b5563;
             color: #f59e0b;
-            padding: 10px 14px; /* 增加內距 */
+            padding: 10px 14px;
             border-radius: 6px;
-            font-size: 15px; /* 稍微放大 */
+            font-size: 15px;
             text-align: center;
             margin: 10px 0;
             border: 1px dashed #6b7280;
@@ -323,10 +323,10 @@
             display: flex;
             justify-content: space-between;
             background: rgba(59, 130, 246, 0.1);
-            padding: 18px; /* 增加內距 */
+            padding: 18px;
             border-radius: 8px;
             margin-bottom: 15px;
-            font-size: 16px; /* 放大統計字體 */
+            font-size: 16px;
         }
         
         .hide {
@@ -362,13 +362,12 @@
                 align-items: flex-start;
             }
             
-            /* 🔧 手機版時間軸調整 */
             .timeline {
-                padding-left: 70px; /* 手機版減少左邊距 */
+                padding-left: 70px;
             }
             
             .timeline::before {
-                left: 35px; /* 調整手機版時間軸位置 */
+                left: 35px;
             }
             
             .timeline-dot {
