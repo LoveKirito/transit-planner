@@ -507,24 +507,24 @@ function updateTimelinePreview() {
         } else if (item.type === 'transport') {
             div.className = 'timeline-item';
             div.style.position = 'relative';
-            div.innerHTML = `
-                <div class="timeline-icon">
-                    ${item.icon}
-                </div>
-                <div class="transport-card transport-${item.transportColor}">
-                    <div class="transport-header">
-                        <span class="transport-name">${item.transportName}</span>
-                        <button class="button button-small button-red" onclick="removeSegment(${item.segmentIndex})" style="margin: 0;">刪除</button>
-                    </div>
-                    <div class="transport-details">
-                        ${item.vehicleNumber ? `🚂 ${item.vehicleNumber}` : ''}
-                        ${item.platform ? ` | 📍 ${item.platform}` : ''}
-                        ${item.seatNumber ? ` | 💺 ${item.seatNumber}` : ''}
-                        <br>⏱️ 行程時間 ${formatDuration(item.duration)}
-                        ${item.cost > 0 ? ` | 💰 NT${item.cost}` : ''}
-                    </div>
-                </div>
-            `;
+div.innerHTML = `
+    <div class="timeline-icon">
+        ${item.icon}
+    </div>
+    <div class="transport-card transport-${item.transportColor}">
+        <div class="transport-header">
+            <span class="transport-name">
+                ${item.transportName}${item.vehicleNumber ? ` ${item.vehicleNumber}` : ''}
+            </span>
+            <button class="button button-small button-red" onclick="removeSegment(${item.segmentIndex})" style="margin: 0;">刪除</button>
+        </div>
+        <div class="transport-details">
+            ${item.platform ? `📍 ${item.platform}` : ''}
+            ${item.seatNumber ? `${item.platform ? ' | ' : ''}💺 ${item.seatNumber}` : ''}
+            ${(item.platform || item.seatNumber) ? '<br>' : ''}⏱️ 行程時間 ${formatDuration(item.duration)}${item.cost > 0 ? ` | 💰 NT${item.cost}` : ''}
+        </div>
+    </div>
+`;
         } else if (item.type === 'transfer-info') {
             div.className = 'transfer-info';
             div.innerHTML = item.text;
