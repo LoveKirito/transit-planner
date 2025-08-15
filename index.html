@@ -59,8 +59,9 @@
             font-size: 1.8rem;
             font-weight: bold;
             display: flex;
-            align-items: center;
+            align-items: baseline;
             gap: 10px;
+            flex-wrap: wrap;
         }
         
         .pwa-badges {
@@ -209,8 +210,8 @@
     left: 28px; /* 🎯 直接使用基準線位置，不再猜測負值 */
     top: 50%;
     transform: translateX(-50%) translateY(-50%); /* 🎯 用transform居中對齊 */
-    width: 24px; /* 🔧 恢復原本大小（從48px改回24px） */
-    height: 24px; /* 🔧 恢復原本大小（從48px改回24px） */
+    width: 28px; /* 🔧 從24px改為28px */
+    height: 28px; /* 🔧 從24px改為28px */
     border-radius: 50%;
     border: none; /* 🔧 移除邊框，改為實心 */
     z-index: 20;
@@ -288,8 +289,8 @@
     content: '';
     position: absolute;
     left: 28px; /* 🎯 直接使用基準線位置，不再猜測負值 */
-    top: -60px; /* 🔧 保持延長的長度 */
-    bottom: -60px; /* 🔧 保持延長的長度 */
+    top: -50px; /* 🔧 從-60px改回-50px */
+    bottom: -50px; /* 🔧 從-60px改回-50px */
     width: 10px; /* 🔧 適中粗細（從12px調整為10px） */
     transform: translateX(-50%); /* 🎯 用transform居中對齊 */
     border-radius: 5px;
@@ -443,13 +444,15 @@
     background-color: #6b7280 !important; /* 步行灰 */
 }
 
-        /* 新增版本號樣式 */
+        
+/* 修正版本號樣式 */
 .version-info {
     color: #6b7280;
-    font-size: 0.75rem;
-    font-weight: 500;
-    margin-left: 8px;
-    opacity: 0.8;
+    font-size: 0.8rem; /* 🔧 從0.75rem改為0.8rem */
+    font-weight: 400; /* 🔧 從500改為400 */
+    margin-left: 6px; /* 🔧 從8px改為6px */
+    opacity: 0.9; /* 🔧 從0.8改為0.9 */
+    white-space: nowrap; /* 🔧 新增這行 */
 }
 
         /* 頁面底部版本資訊 */
@@ -469,7 +472,7 @@
         <!-- Header -->
         <div class="header">
             <div class="header-content">
-                <h1>🚇 交通轉乘記錄器<span class="version-info">v3.0</span></h1>
+                <h1>🚇 交通轉乘記錄器<span class="version-info">v3.1</span></h1>
                 <div class="pwa-badges">
                     <div class="badge" id="statusBadge">PWA版本 - 載入中</div>
                     <button class="badge install-btn hide" id="installBtn" onclick="installPWA()">
@@ -658,9 +661,8 @@
 
         <!-- 版本資訊 -->
         <div class="footer-version">
-            交通轉乘記錄器 v3.0 | Made with ❤️ | PWA版本
+            交通轉乘記錄器 v3.1 | Made by ShiroiWhite | PWA版本
         </div>
-    </div>
     </div>
 
     <script src="app.js"></script>
