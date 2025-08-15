@@ -206,34 +206,34 @@
         /* 🎯 修正圓點 - 改為實心圓 + 加粗 */
 .timeline-dot {
     position: absolute;
-    left: -68px; /* 🔧 關鍵修正：精確對齊時間軸 */
+    left: -52px; /* 🔧 從-68px往右移16px = -52px */
     top: 50%;
     transform: translateY(-50%);
-    width: 24px; /* 🔧 加大圓點 */
-    height: 24px; /* 🔧 加大圓點 */
+    width: 48px; /* 🔧 放大一倍 */
+    height: 48px; /* 🔧 放大一倍 */
     border-radius: 50%;
     border: none; /* 🔧 移除邊框，改為實心 */
     z-index: 20;
-    box-shadow: 0 0 0 4px #111827; /* 🔧 用陰影做外圈效果 */
+    box-shadow: 0 0 0 6px #111827; /* 🔧 加大外圈陰影 */
 }
         
         /* 🎯 修正交通工具圖標位置 */
 .timeline-icon {
     position: absolute;
-    left: -80px; /* 🔧 關鍵修正：精確對齊時間軸 */
+    left: -72px; /* 🔧 從-80px往右移8px = -72px */
     top: 50%;
     transform: translateY(-50%);
     background: #1f2937;
-    border: 3px solid #4b5563;
+    border: 4px solid #4b5563; /* 🔧 邊框加粗 */
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 22px;
+    font-size: 44px; /* 🔧 從22px放大一倍 */
     z-index: 25;
-    width: 48px;
-    height: 48px;
-    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.4);
+    width: 96px; /* 🔧 從48px放大一倍 */
+    height: 96px; /* 🔧 從48px放大一倍 */
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4); /* 🔧 加大陰影 */
 }
         
         .station-info {
@@ -262,19 +262,36 @@
     border-radius: 10px;
     padding: 18px;
     margin: 15px 0;
-    border-left-width: 4px;
+    border-left-width: 6px; /* 🔧 加粗左邊框 */
     position: relative; /* 🔧 新增這行 */
 }
+
+        /* 3️⃣ 然後在 .transport-card 的「正下方」新增邊框顏色： */
+/* 🌈 搭乘資訊卡邊框顏色 */
+.transport-taiwan-railway { border-left-color: #3b82f6 !important; }
+.transport-high-speed { border-left-color: #f97316 !important; }
+.transport-metro-red { border-left-color: #ef4444 !important; }
+.transport-metro-blue { border-left-color: #3b82f6 !important; }
+.transport-metro-green { border-left-color: #22c55e !important; }
+.transport-metro-orange { border-left-color: #f97316 !important; }
+.transport-metro-yellow { border-left-color: #eab308 !important; }
+.transport-metro-purple { border-left-color: #a855f7 !important; }
+.transport-metro-brown { border-left-color: #a16207 !important; }
+.transport-metro-pink { border-left-color: #ec4899 !important; }
+.transport-bus { border-left-color: #8b5cf6 !important; }
+.transport-intercity-bus { border-left-color: #dc2626 !important; }
+.transport-walking { border-left-color: #6b7280 !important; }
+
 
 /* 🔧 修正彩色線段 - 加粗且正確連接 */
 .transport-card::before {
     content: '';
     position: absolute;
-    left: -52px; /* 🔧 關鍵修正：精確對齊時間軸 */
-    top: -25px; /* 🔧 延伸更多確保連接 */
-    bottom: -25px; /* 🔧 延伸更多確保連接 */
-    width: 8px; /* 🔧 加粗線段 */
-    border-radius: 4px;
+    left: -58px; /* 🔧 從-52px往左移6px = -58px */
+    top: -50px; /* 🔧 從-25px大幅延長到-50px */
+    bottom: -50px; /* 🔧 從-25px大幅延長到-50px */
+    width: 12px; /* 🔧 從6px加粗一倍 */
+    border-radius: 6px; /* 🔧 圓角相應調整 */
     z-index: 15;
 }
 
@@ -308,8 +325,6 @@
             display: block;
             margin-right: 80px; /* 🔧 為右下角刪除鍵留空間 */
             white-space: nowrap; /* 🔧 關鍵：防止換行 */
-            overflow: hidden; /* 🔧 關鍵：隱藏超出部分 */
-            text-overflow: ellipsis; /* 🔧 關鍵：顯示省略號 */
         }
 
         /* 🔧 刪除鍵 - 固定在右下角 */
@@ -449,21 +464,29 @@
     }
     
     .timeline-dot {
-        left: -64px; /* 🔧 手機版圓點位置 */
-        width: 20px;
-        height: 20px;
+        left: -48px; /* 🔧 手機版圓點往右調整 */
+        width: 40px; /* 🔧 手機版適當縮小 */
+        height: 40px;
+        box-shadow: 0 0 0 5px #111827;
     }
     
     .timeline-icon {
-        left: -76px; /* 🔧 手機版圖標位置 */
-        width: 44px;
-        height: 44px;
-        font-size: 20px;
+        left: -68px; /* 🔧 手機版圖標往右調整 */
+        width: 80px; /* 🔧 手機版適當縮小 */
+        height: 80px;
+        font-size: 36px; /* 🔧 手機版字體調整 */
+        border: 3px solid #4b5563;
     }
     
     .transport-card::before {
-        left: -48px; /* 🔧 手機版連接線位置 */
-        width: 6px;
+        left: -54px; /* 🔧 手機版連接線往左調整 */
+        width: 10px; /* 🔧 手機版適當縮小 */
+        top: -40px;
+        bottom: -40px;
+        border-radius: 5px;
+        
+    .transport-card {
+        border-left-width: 5px; /* 🔧 這行新增到手機版區域 */
     }
 }
             
