@@ -50,18 +50,26 @@
         
         .header-content {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
+            flex-direction: column;
+            gap: 12px;
             margin-bottom: 15px;
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 10px;
         }
         
         .header h1 {
-            font-size: 1.8rem;
+            font-size: 1.6rem;
             font-weight: bold;
             display: flex;
             align-items: baseline;
             gap: 10px;
             flex-wrap: wrap;
+            flex: 1;
         }
         
         .pwa-badges {
@@ -182,7 +190,7 @@
         /* 🔧 修正時間軸樣式 */
         .timeline {
             position: relative;
-            padding-left: 80px;
+            padding-left: 90px;  /* 👈 從 80px 改為 90px */
             margin: 20px 0;
         }
         
@@ -190,7 +198,7 @@
         .timeline::before {
             content: '';
             position: absolute;
-            left: 28px; /* 🔧 改為手機版基準線（原本32px改為28px） */
+            left: 30px;  /* 👈 從 28px 改為 30px - 這是基準線 */
             top: 15px;
             bottom: 15px;
             width: 4px;
@@ -207,30 +215,31 @@
         /* 🎯 修正圓點 - 改為實心圓 + 加粗 */
 .timeline-dot {
     position: absolute;
-    left: 28px; /* 🎯 直接使用基準線位置，不再猜測負值 */
+    left: 32px;  /* 👈 從 28px 改為 32px（基準線中心）*/
     top: 50%;
-    transform: translateX(-50%) translateY(-50%); /* 🎯 用transform居中對齊 */
-    width: 28px; /* 🔧 從24px改為28px */
-    height: 28px; /* 🔧 從24px改為28px */
+    transform: translate(-50%, -50%);  /* 👈 簡化 transform */
+    width: 24px;  /* 👈 從 28px 改回 24px */
+    height: 24px;  /* 👈 從 28px 改回 24px */
     border-radius: 50%;
-    border: none; /* 🔧 移除邊框，改為實心 */
+    border: none !important;  /* 👈 加上 !important 強制移除邊框 */
+    outline: none !important;  /* 👈 新增這行 */
     z-index: 20;
-    box-shadow: 0 0 0 4px #111827; /* 🔧 調整陰影大小 */
+    box-shadow: 0 0 0 4px #111827;
 }
         
         /* 🎯 修正交通工具圖標位置 */
 .timeline-icon {
     position: absolute;
-    left: 28px; /* 🎯 直接使用基準線位置，不再猜測負值 */
+    left: 32px;  /* 👈 從 28px 改為 32px */
     top: 50%;
-    transform: translateX(-50%) translateY(-50%); /* 🎯 用transform居中對齊 */
+    transform: translate(-50%, -50%);  /* 👈 簡化 transform *//* 🎯 用transform居中對齊 */
     background: #1f2937;
     border: 3px solid #4b5563; /* 🔧 恢復原本邊框粗細 */
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 22px; /* 🔧 恢復原本大小（從44px改回22px） */
+    font-size: 20px;  /* 👈 從 22px 改為 20px */
     z-index: 25;
     width: 48px; /* 🔧 恢復原本大小（從96px改回48px） */
     height: 48px; /* 🔧 恢復原本大小（從96px改回48px） */
@@ -288,12 +297,12 @@
 .transport-card::before {
     content: '';
     position: absolute;
-    left: 28px; /* 🎯 直接使用基準線位置，不再猜測負值 */
+    left: 32px;  /* 👈 從 28px 改為 32px */
     top: -50px; /* 🔧 從-60px改回-50px */
     bottom: -50px; /* 🔧 從-60px改回-50px */
-    width: 10px; /* 🔧 適中粗細（從12px調整為10px） */
+    width: 8px;  /* 👈 從 10px 改為 8px */
     transform: translateX(-50%); /* 🎯 用transform居中對齊 */
-    border-radius: 5px;
+    border-radius: 4px;  /* 👈 從 5px 改為 4px */
     z-index: 15;
 }
 
@@ -406,42 +415,68 @@
 /* 🌈 恢復圓點顏色 - 實心彩色圓 */
 .dot-taiwan-railway { 
     background-color: #3b82f6 !important; /* 台鐵藍 */
+    border: none !important;  /* 👈 加上這行 */
+    outline: none !important;  /* 👈 加上這行 */
 }
 .dot-high-speed { 
     background-color: #f97316 !important; /* 高鐵橘 */
+    border: none !important;  /* 👈 加上這行 */
+    outline: none !important;  /* 👈 加上這行 */
 }
 .dot-metro-red { 
     background-color: #ef4444 !important; /* 捷運紅 */
+    border: none !important;  /* 👈 加上這行 */
+    outline: none !important;  /* 👈 加上這行 */
 }
 .dot-metro-blue { 
     background-color: #3b82f6 !important; /* 捷運藍 */
+    border: none !important;  /* 👈 加上這行 */
+    outline: none !important;  /* 👈 加上這行 */
 }
 .dot-metro-green { 
     background-color: #22c55e !important; /* 捷運綠 */
+    border: none !important;  /* 👈 加上這行 */
+    outline: none !important;  /* 👈 加上這行 */
 }
 .dot-metro-orange { 
     background-color: #f97316 !important; /* 捷運橘 */
+    border: none !important;  /* 👈 加上這行 */
+    outline: none !important;  /* 👈 加上這行 */
 }
 .dot-metro-yellow { 
     background-color: #eab308 !important; /* 捷運黃 */
+    border: none !important;  /* 👈 加上這行 */
+    outline: none !important;  /* 👈 加上這行 */
 }
 .dot-metro-purple { 
     background-color: #a855f7 !important; /* 捷運紫 */
+    border: none !important;  /* 👈 加上這行 */
+    outline: none !important;  /* 👈 加上這行 */
 }
 .dot-metro-brown { 
     background-color: #a16207 !important; /* 捷運棕 */
+    border: none !important;  /* 👈 加上這行 */
+    outline: none !important;  /* 👈 加上這行 */
 }
 .dot-metro-pink { 
     background-color: #ec4899 !important; /* 捷運粉 */
+    border: none !important;  /* 👈 加上這行 */
+    outline: none !important;  /* 👈 加上這行 */
 }
 .dot-bus { 
     background-color: #8b5cf6 !important; /* 公車紫 */
+    border: none !important;  /* 👈 加上這行 */
+    outline: none !important;  /* 👈 加上這行 */
 }
 .dot-intercity-bus { 
     background-color: #dc2626 !important; /* 客運紅 */
+    border: none !important;  /* 👈 加上這行 */
+    outline: none !important;  /* 👈 加上這行 */
 }
 .dot-walking { 
     background-color: #6b7280 !important; /* 步行灰 */
+    border: none !important;  /* 👈 加上這行 */
+    outline: none !important;  /* 👈 加上這行 */
 }
 
         
@@ -472,15 +507,17 @@
         <!-- Header -->
         <div class="header">
             <div class="header-content">
-                <h1>🚇 交通轉乘記錄器<span class="version-info">v3.1</span></h1>
-                <div class="pwa-badges">
-                    <div class="badge" id="statusBadge">PWA版本 - 載入中</div>
-                    <button class="badge install-btn hide" id="installBtn" onclick="installPWA()">
-                        📱 安裝APP
-                    </button>
-                </div>
-            </div>
-            <p style="color: #9ca3af; margin-bottom: 15px;">自定義你的交通路線，支援離線使用</p>
+    <div class="header-top">
+        <h1>🚇 交通轉乘記錄器<span class="version-info">v3.2</span></h1>
+        <div class="pwa-badges">
+            <div class="badge" id="statusBadge">PWA版本 - 載入中</div>
+            <button class="badge install-btn hide" id="installBtn" onclick="installPWA()">
+                📱 安裝APP
+            </button>
+        </div>
+    </div>
+    <p style="color: #9ca3af; margin-bottom: 15px;">自定義你的交通路線，支援離線使用</p>
+</div>
             
             <div style="display: flex; gap: 10px; flex-wrap: wrap;">
                 <button class="button button-small" onclick="showAddSegmentForm()">
@@ -661,7 +698,7 @@
 
         <!-- 版本資訊 -->
         <div class="footer-version">
-            交通轉乘記錄器 v3.1 | Made by ShiroiWhite | PWA版本
+            交通轉乘記錄器 v3.2 | Made by ShiroiWhite | PWA版本
         </div>
     </div>
 
