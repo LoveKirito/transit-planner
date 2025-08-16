@@ -198,7 +198,7 @@
         .timeline::before {
             content: '';
             position: absolute;
-            left: 30px;  /* 👈 從 28px 改為 30px - 這是基準線 */
+            left: 32px;  /* 👈 改為 32px */
             top: 15px;
             bottom: 15px;
             width: 4px;
@@ -215,7 +215,7 @@
         /* 🎯 修正圓點 - 改為實心圓 + 加粗 */
 .timeline-dot {
     position: absolute;
-    left: 32px;  /* 👈 從 28px 改為 32px（基準線中心）*/
+    left: 34px;  /* 👈 改為 34px (32+2) */
     top: 50%;
     transform: translate(-50%, -50%);  /* 👈 簡化 transform */
     width: 24px;  /* 👈 從 28px 改回 24px */
@@ -230,7 +230,7 @@
         /* 🎯 修正交通工具圖標位置 */
 .timeline-icon {
     position: absolute;
-    left: 32px;  /* 👈 從 28px 改為 32px */
+    left: 34px;  /* 👈 改為 34px (32+2) */
     top: 50%;
     transform: translate(-50%, -50%);  /* 👈 簡化 transform *//* 🎯 用transform居中對齊 */
     background: #1f2937;
@@ -297,7 +297,7 @@
 .transport-card::before {
     content: '';
     position: absolute;
-    left: 32px;  /* 👈 從 28px 改為 32px */
+    left: 34px;  /* 👈 改為 34px (32+2) */
     top: -50px; /* 🔧 從-60px改回-50px */
     bottom: -50px; /* 🔧 從-60px改回-50px */
     width: 8px;  /* 👈 從 10px 改為 8px */
@@ -508,7 +508,7 @@
         <div class="header">
             <div class="header-content">
     <div class="header-top">
-        <h1>🚇 交通轉乘記錄器<span class="version-info">v3.2</span></h1>
+        <h1>🚇 交通轉乘記錄器<span class="version-info">v3.3</span></h1>
         <div class="pwa-badges">
             <div class="badge" id="statusBadge">PWA版本 - 載入中</div>
             <button class="badge install-btn hide" id="installBtn" onclick="installPWA()">
@@ -698,7 +698,7 @@
 
         <!-- 版本資訊 -->
         <div class="footer-version">
-            交通轉乘記錄器 v3.2 | Made by ShiroiWhite | PWA版本
+            交通轉乘記錄器 v3.3 | Made by ShiroiWhite | PWA版本
         </div>
     </div>
 
